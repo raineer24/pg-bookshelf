@@ -12,6 +12,8 @@ router
     Blog.where(req.query)
       .fetchAll()
       .then(function(blogs) {
+        console.log(blogs);
+
         res.json({ blogs });
       });
   })
@@ -21,13 +23,12 @@ router
     new Blog({
       title: req.body.title,
       content: req.body.content
-      //emailAddress: req.body.emailAddress
     })
       .save()
       .then(function(blog) {
         console.log(blog);
 
-        return res.json({ blog });
+        return res.send({ blog });
       });
   });
 
