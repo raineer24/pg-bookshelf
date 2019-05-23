@@ -22,7 +22,10 @@ router
 
     new Blog({
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
+      image_url: req.body.image_url,
+      created_at: req.body.created_at,
+      updated_at: req.body.updated_at
     })
       .save()
       .then(function(blog) {
