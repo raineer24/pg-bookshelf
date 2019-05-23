@@ -17,22 +17,13 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       return Promise.all([
         // Inserts seed entries
-        knex("blogs").insert(
-          {
-            title: "avengers end game",
-            content: "the last sage",
-            image_url: "https://i.imgur.com/jGGnBKH.jpg",
-            createdAt: "2017-01-30T16:49:19.278Z",
-            updateAt: "2017-01-30T16:49:19.278Z"
-          },
-          {
-            title: "muro ami",
-            content: "little mermaid",
-            image_url: "https://i.imgur.com/jGGnBKH.jpg",
-            createdAt: "2017-01-30T16:49:19.278Z",
-            updateAt: "2017-01-30T16:49:19.278Z"
-          }
-        )
+        knex("blogs").insert({
+          title: "avengers end game",
+          content: "the last sage",
+          image_url: "https://i.imgur.com/jGGnBKH.jpg",
+          created_at: "2017-01-30T16:49:19.278Z",
+          updated_at: "2017-01-30T16:49:19.278Z"
+        })
       ]);
     });
 };
