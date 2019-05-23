@@ -11,6 +11,9 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 
+const morgan = require("morgan");
+
+app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/blog", blogRoute);
 

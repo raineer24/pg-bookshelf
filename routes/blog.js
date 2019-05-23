@@ -1,10 +1,10 @@
 "use strict";
 
-var express = require("express");
+const express = require("express");
 
-var Blog = require("../models/blog");
+const Blog = require("../models/blog");
 
-var router = express.Router();
+const router = express.Router();
 
 router
   .route("/")
@@ -16,14 +16,18 @@ router
       });
   })
   .post(function(req, res) {
+    console.log("req.body", req.body);
+
     new Blog({
       title: req.body.title,
       content: req.body.content
       //emailAddress: req.body.emailAddress
     })
       .save()
-      .then(function(saved) {
-        res.json({ saved });
+      .then(function(blog) {
+        console.log(blog);
+
+        return res.json({ blog });
       });
   });
 
