@@ -6,34 +6,54 @@ const Blog = require("../models/blog");
 
 const router = express.Router();
 
-router
-  .route("/")
-  .get(function(req, res) {
-    Blog.where(req.query)
-      .fetchAll()
-      .then(function(blogs) {
-        console.log(blogs);
+// router
+//   .route("/")
+//   .get(function(req, res) {
+//     Blog.where(req.query)
+//       .fetchAll()
+//       .then(function(blogs) {
+//         console.log(blogs);
 
-        res.json({ blogs });
-      });
+//         res.json({ blogs });
+//       });
+//   })
+//   .post(function(req, res) {
+//     console.log("req.body", req.body);
+
+//     new Blog({
+//       title: req.body.title,
+//       content: req.body.content,
+//       image_url: req.body.image_url,
+//       created_at: req.body.created_at,
+//       updated_at: req.body.updated_at
+//     })
+//       .save()
+//       .then(function(blog) {
+//         return res.send({ blog });
+//       });
+//   });
+
+router.get("/", (req, res) => {
+  Blog.where(req.query)
+    .fetchAll()
+    .then(blogs => {
+      res.json({ blogs });
+    });
+});
+
+router.post("/", (req, res) => {
+  new Blog({
+    title: req.body.title,
+    content: req.body.content,
+    image_url: req.body.image_url,
+    created_at: req.body.created_at,
+    updated_at: req.body.updated_at
   })
-  .post(function(req, res) {
-    console.log("req.body", req.body);
-
-    new Blog({
-      title: req.body.title,
-      content: req.body.content,
-      image_url: req.body.image_url,
-      created_at: req.body.created_at,
-      updated_at: req.body.updated_at
-    })
-      .save()
-      .then(function(blog) {
-        console.log(blog);
-
-        return res.send({ blog });
-      });
-  });
+    .save()
+    .then(function(blog) {
+      return res.send({ blog });
+    });
+});
 
 router
   .route("/:id")
