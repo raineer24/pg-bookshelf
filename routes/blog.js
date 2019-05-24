@@ -129,4 +129,23 @@ router.get("/:id", (req, res, next) => {
 //     });
 // };
 
+router.put("/:id", (req, res, next) => {
+  Blog.where("id", req.params.id)
+    .fetch()
+    .then(blog => {
+      blog
+        .save({
+          title: req.body.title,
+          content: req.body.content
+        })
+        .then(blog => {
+          res.json({
+            ok: true,
+            blog,
+            message: "Blog Updated"
+          });
+        });
+    });
+});
+
 module.exports = router;
