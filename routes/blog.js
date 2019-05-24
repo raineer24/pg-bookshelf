@@ -92,34 +92,41 @@ router.post("/", upload.single("image"), (req, res) => {
   });
 });
 
-router
-  .route("/:id")
-  .get(function(req, res) {
-    Blog.where("id", req.body.id).then(function(blog) {
-      res.json({ blog });
-    });
-  })
-  .put(function(req, res) {
-    Blog.where("id", req.params.id)
-      .fetch()
-      .then(function(blog) {
-        blog
-          .save({
-            title: req.body.title,
-            content: req.body.content
-            //emailAddress: req.body.emailAddress
-          })
-          .then(function(saved) {
-            res.json({ saved });
-          });
-      });
-  });
-delete function(req, res) {
+router.get("/:id", (req, res, next) => {
   Blog.where("id", req.params.id)
-    .destroy()
-    .then(function(destroyed) {
-      res.json({ destroyed });
+    .fetch()
+    .then(blog => {
+      res.json(blog);
     });
-};
+});
+
+// router.("/:id")
+//   .get(function(req, res) {
+//     Blog.where("id", req.body.id).then(function(blog) {
+//       res.json({ blog });
+//     });
+//   })
+//   .put(function(req, res) {
+//     Blog.where("id", req.params.id)
+//       .fetch()
+//       .then(function(blog) {
+//         blog
+//           .save({
+//             title: req.body.title,
+//             content: req.body.content
+//             //emailAddress: req.body.emailAddress
+//           })
+//           .then(function(saved) {
+//             res.json({ saved });
+//           });
+//       });
+//   });
+// delete function(req, res) {
+//   Blog.where("id", req.params.id)
+//     .destroy()
+//     .then(function(destroyed) {
+//       res.json({ destroyed });
+//     });
+// };
 
 module.exports = router;
