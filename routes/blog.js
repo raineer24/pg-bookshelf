@@ -148,4 +148,14 @@ router.put("/:id", (req, res, next) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  Blog.where("id", req.params.id)
+    .destroy()
+    .then(destroyed => {
+      res.json({
+        message: "deleted"
+      });
+    });
+});
+
 module.exports = router;
