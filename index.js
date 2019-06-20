@@ -2,14 +2,14 @@
 
 "use strict";
 
-var express = require("express");
-var bodyParser = require("body-parser");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-var blogRoute = require("./routes/blog");
+const blogRoute = require("./routes/blog");
 
-var app = express();
+const app = express();
 
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const morgan = require("morgan");
 
@@ -22,10 +22,43 @@ app.use(
     parameterLimit: 1000000
   })
 );
-app.use("/blog", blogRoute);
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type,Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "PUT, POST, ,PATCH, DELETE, GET"
+    );
+    return res.status(200).json({});
+  }
+  next();
+});
+
+app.use("/api/v2/blog", blogRoute);
 
 app.listen(port, function(err) {
   if (err) throw err;
 
   console.log("Blogs server listening on port %s.", port);
+});
+
+// catch 404 and forward to error handler
+app.use((_req, _res, next) => {
+  next(createError(404));
+});
+
+// error handler
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, _next) => {
+  // render the error page
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: req.app.get("env") === "development" ? err : {}
+  });
 });
