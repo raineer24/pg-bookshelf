@@ -48,9 +48,9 @@ app.listen(port, function(err) {
 });
 
 // catch 404 and forward to error handler
-// app.use((_req, _res, next) => {
-//   next(createError(404));
-// });
+app.use((_req, _res, next) => {
+  next(createError(404));
+});
 
 // error handler
 // eslint-disable-next-line no-unused-vars
@@ -62,3 +62,5 @@ app.use((err, req, res, _next) => {
     error: req.app.get("env") === "development" ? err : {}
   });
 });
+
+module.exports = app;
