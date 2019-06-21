@@ -30,7 +30,7 @@ module.exports = {
   },
   production: {
     client: "pg",
-    connection: process.env.DATABASE_URL
+    bookshelf: process.env.DATABASE_URL
   }
 };
 
