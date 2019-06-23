@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 "use strict";
-
+const createError = require("http-errors");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -48,7 +48,7 @@ app.listen(port, function(err) {
 });
 
 // catch 404 and forward to error handler
-app.use((_req, _res, next) => {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
@@ -62,3 +62,5 @@ app.use((err, req, res, _next) => {
     error: req.app.get("env") === "development" ? err : {}
   });
 });
+
+module.exports = app;
