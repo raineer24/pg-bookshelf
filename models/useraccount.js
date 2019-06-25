@@ -2,8 +2,8 @@
 
 const bookshelf = require("../config/database");
 
-const Blog = bookshelf.Model.extend({
+const User = bookshelf.Model.extend({
   tableName: "useraccount"
 });
 
-module.exports = Blog;
+module.exports = User;

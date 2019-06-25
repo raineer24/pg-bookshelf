@@ -2,7 +2,7 @@
 
 const express = require("express");
 const bcrypt = require("bcrypt");
-const Blog = require("../models/useraccount");
+const User = require("../models/useraccount");
 const router = express.Router();
 
 router.post("/signup", (req, res, next) => {
@@ -12,7 +12,7 @@ router.post("/signup", (req, res, next) => {
         error: err
       });
     } else {
-      const user = new Blog({
+      const user = new User({
         username: req.body.username,
         email: req.body.email,
         password: hash,
@@ -30,7 +30,7 @@ router.post("/signup", (req, res, next) => {
       user
         .save()
         .then(result => {
-          console.log(result);
+          console.log(typeof result.toJSON().email);
           res.status(201).json({
             message: "User Created"
           });
@@ -43,6 +43,18 @@ router.post("/signup", (req, res, next) => {
         });
     }
   });
+});
+
+router.get("/viewUsers", function(req, res) {
+  new User()
+    .fetchAll()
+    .then(function(users) {
+      res.send(users.toJSON());
+    })
+    .catch(function(error) {
+      console.log(error);
+      res.send("An error occured");
+    });
 });
 
 module.exports = router;
