@@ -21,8 +21,8 @@ exports.seed = function(knex, Promise) {
           title: "JOhn wick 4",
           content: "Winston revenge",
           image_url: "https://i.imgur.com/jGGnBKH.jpg",
-          created_at: "1529644667834",
-          updated_at: "1529644667834",
+          created_at: "2011-01-01",
+          updated_at: "2011-01-01"
         })
       ]);
     });

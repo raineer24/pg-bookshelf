@@ -12,15 +12,23 @@
 // };
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex("blogs")
+  return knex("useraccount")
     .del()
     .then(function() {
       return Promise.all([
         // Inserts seed entries
-        knex("blogs").insert({
-          title: "avengers end game",
-          content: "the last sage",
-          image_url: "https://i.imgur.com/jGGnBKH.jpg",
+        knex("useraccount").insert({
+          username: "johnwick4",
+          password: "password",
+          email: "john1@gmail.com",
+          first_name: "jonathan",
+          last_name: "wick",
+          uiid: "1",
+          gender: "M",
+          mobile_number: "+63 9087654321",
+          birth_date: "2016-06-23",
+          deactivated: "0",
+          forced_reset: "0",
           created_at: "2011-01-01",
           updated_at: "2011-01-01"
         })
