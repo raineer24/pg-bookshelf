@@ -4,6 +4,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/useraccount");
 const router = express.Router();
+const knex = require("../config/database");
 
 function isValidId(req, res, next) {
   if (!isNaN(req.params.id)) return next();
@@ -18,6 +19,16 @@ function isValidId(req, res, next) {
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+function findUser(email) {
+  return knex.knex
+    .raw("SELECT * FROM useraccount WHERE email = ?", [email])
+    .then(data => {
+      console.log("data.rows.length", data.rows.length);
+
+      data.rows[0];
+    });
 }
 
 router.post("/signup", (req, res, next) => {
@@ -77,6 +88,36 @@ router.get("/viewUsers", function(req, res) {
     .catch(function(error) {
       console.log(error);
       res.send("An error occured");
+    });
+});
+
+router.post("/login", function(req, res) {
+  const userReq = req.body.email;
+  let user;
+  // User.where({ email: req.body.email })
+  //   .fetch()
+  //   .then(user => {
+  //     console.log(knex);
+
+  //     //res.json(user.toJSON());
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.status(500).json({
+  //       error: err
+  //     });
+  //   });
+
+  findUser(req.body.email)
+    .then(foundUser => {
+      user = foundUser;
+      console.log(user);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
 });
 
