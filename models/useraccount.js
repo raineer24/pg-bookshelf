@@ -4,20 +4,28 @@ const bookshelf = require("../config/database");
 
 const User = bookshelf.Model.extend(
   {
-    tableName: "useraccount"
-  },
-  {
-    byEmail: function(email) {
-      return this.forge()
-        .query({ where: { email: email } })
-        .fetch();
+    tableName: "useraccount",
+    returnFullName: function() {
+      return this.get("firstname") + this.get("lastname");
     }
+    // findUs: function(email) {
+    //   return bookshelf.knex
+    //     .raw("SELECT * FROM useraccount WHERE email = ?", [email])
+    //     .then(data => {
+    //       if (data.rows < 1) {
+    //       }
+    //     });
+    // }
   },
   {
-    findUser: function(email) {
+    findUs: function(email) {
       return bookshelf.knex
-        .raw("SELECT * FROM useraccount WHERE email = ?", [userReq.email])
-        .then(data => data.rows[0]);
+        .raw("SELECT * FROM useraccount WHERE email = ?", [email])
+        .then(data => {
+          if (data.rows < 1) {
+            console.log("bogo ka");
+          }
+        });
     }
   }
 );

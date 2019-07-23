@@ -25,9 +25,8 @@ function findUser(email) {
   return knex.knex
     .raw("SELECT * FROM useraccount WHERE email = ?", [email])
     .then(data => {
-      console.log("data.rows.length", data.rows.length);
-
-      data.rows[0];
+      if (data.rows < 1) {
+      }
     });
 }
 
@@ -108,10 +107,25 @@ router.post("/login", function(req, res) {
   //     });
   //   });
 
-  findUser(req.body.email)
-    .then(foundUser => {
-      user = foundUser;
-      console.log(user);
+  // findUser(req.body.email)
+  //   .then(user => {
+  //     console.log("user", user);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.status(500).json({
+  //       error: err
+  //     });
+  //   });
+
+  User.findUs(req.body.email)
+    .then(user => {
+      // if (user.rows.length < 1) {
+      //   return res.status(401).json({
+      //     message: "Auth failed"
+      //   });
+      // }
+      console.log("user", user);
     })
     .catch(err => {
       console.log(err);
