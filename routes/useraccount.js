@@ -93,19 +93,25 @@ router.get("/viewUsers", function(req, res) {
 router.post("/login", function(req, res) {
   const userReq = req.body.email;
   let user;
-  // User.where({ email: req.body.email })
-  //   .fetch()
-  //   .then(user => {
-  //     console.log(knex);
+  User.where({ email: req.body.email })
+    .fetch()
+    .then(user => {
+      console.log(user);
 
-  //     //res.json(user.toJSON());
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //     res.status(500).json({
-  //       error: err
-  //     });
-  //   });
+      if (!user) {
+        res.status(404).json({ error: true, data: {} });
+      } else {
+        res.json({ error: false, data: user.toJSON() });
+      }
+
+      //res.json(user.toJSON());
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 
   // findUser(req.body.email)
   //   .then(user => {
@@ -118,21 +124,24 @@ router.post("/login", function(req, res) {
   //     });
   //   });
 
-  User.findUs(req.body.email)
-    .then(user => {
-      // if (user.rows.length < 1) {
-      //   return res.status(401).json({
-      //     message: "Auth failed"
-      //   });
-      // }
-      console.log("user", user);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
+  // User.findUs(req.body.email)
+  //   .then(result => {
+  //     // if (user.rows.length < 1) {
+  //     //   return res.status(401).json({
+  //     //     message: "Auth failed"
+  //     //   });
+  //     // }
+  //     console.log("result", result);
+  //     if (!user) {
+  //       console.log("bogo ka");
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.status(500).json({
+  //       error: err
+  //     });
+  //   });
 });
 
 module.exports = router;

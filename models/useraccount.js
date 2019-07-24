@@ -22,9 +22,8 @@ const User = bookshelf.Model.extend(
       return bookshelf.knex
         .raw("SELECT * FROM useraccount WHERE email = ?", [email])
         .then(data => {
-          if (data.rows < 1) {
-            console.log("bogo ka");
-          }
+          data.rows[0];
+          //console.log(data.rows[0]);
         });
     }
   }
